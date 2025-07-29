@@ -11,11 +11,17 @@ type Product struct {
 }
 
 type ProductRepository interface {
+	Create(ctx context.Context, product *Product) error
 	FetchAll(ctx context.Context) ([]Product, error)
 	FindByID(ctx context.Context, id uint) (*Product, error)
+	FetchPaginated(ctx context.Context, limit, offset int) ([]Product, error)
+	Update(ctx context.Context, id uint, product *Product) error
 }
 
 type ProductUsecase interface {
+	Create(ctx context.Context, product *Product) error
 	FetchAll(ctx context.Context) ([]Product, error)
 	FindByID(ctx context.Context, id uint) (*Product, error)
+	FetchPaginated(ctx context.Context, limit, offset int) ([]Product, error)
+	Update(ctx context.Context, id uint, product *Product) error
 }

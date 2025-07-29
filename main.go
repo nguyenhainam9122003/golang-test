@@ -23,9 +23,15 @@ func main() {
 	r := gin.Default()
 	api := r.Group("/api")
 
+	api.POST("/products", productHandler.CreateProduct)
+
+	api.GET("/products/paginated", productHandler.GetPaginatedProducts)
+
 	api.GET("/products", productHandler.GetAllProducts)
 
 	api.GET("/products/:id", productHandler.GetProductByID)
+
+	api.PUT("/products/:id", productHandler.UpdateProduct)
 
 	r.Run(":" + port)
 }
