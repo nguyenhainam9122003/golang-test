@@ -1,15 +1,33 @@
 package main
 
 import (
+	"fmt"
 	"github.com/joho/godotenv"
 	"os"
 	"test/db"
 	"test/handler"
 	"test/repository"
 	"test/usecase"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
+
+func Logger() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		t := time.Now()
+
+		// Trước khi handler chạy
+		path := c.Request.URL.Path
+		method := c.Request.Method
+		fmt.Println("Before request:", method, path)
+
+		c.Next() // gọi handler tiếp theo
+
+		// Sau khi handler chạy
+		fmt.Println("After request:", time.Since(t))
+	}
+}
 
 func main() {
 	godotenv.Load()
@@ -21,6 +39,7 @@ func main() {
 	productHandler := handler.NewProductHandler(productUsecase)
 
 	r := gin.Default()
+	r.Use(Logger())
 	api := r.Group("/api")
 
 	api.POST("/products", productHandler.CreateProduct)

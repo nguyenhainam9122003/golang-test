@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"gorm.io/gorm"
 	"test/domain"
 )
@@ -30,6 +31,9 @@ func (r *productRepository) FindByID(ctx context.Context, id uint) (*domain.Prod
 	if err != nil {
 		return nil, err
 	}
+
+	fmt.Println("product", product)
+
 	return &product, nil
 }
 
