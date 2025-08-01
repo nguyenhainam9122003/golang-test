@@ -5,7 +5,6 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
-	"test/domain"
 )
 
 func Init() *gorm.DB {
@@ -15,6 +14,6 @@ func Init() *gorm.DB {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.AutoMigrate(&domain.Product{})
+	//db.AutoMigrate(&model.Product{})
 	return db
 }

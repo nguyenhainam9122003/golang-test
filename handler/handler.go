@@ -1,49 +1,45 @@
 package handler
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 	"test/domain"
+	"test/model"
+	"test/utils"
+
+	"github.com/gin-gonic/gin"
 )
 
 type ProductHandler struct {
-	usecase domain.ProductUsecase
+	Service domain.ProductService
 }
 
-func NewProductHandler(u domain.ProductUsecase) *ProductHandler {
-	return &ProductHandler{u}
+func NewProductHandler(r *gin.Engine, service domain.ProductService) {
+	h := &ProductHandler{Service: service}
+
+	r.GET("/products", h.GetAll)
+	r.POST("/products", h.Create)
+	r.GET("products/paginate", h.GetPaginatedProducts)
+	r.GET("/products/:id", h.GetByID)
+	r.PUT("/products/:id", h.UpdateProduct)
 }
 
-func (h *ProductHandler) CreateProduct(c *gin.Context) {
-	var product domain.Product
-	if err := c.ShouldBindJSON(&product); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+func (h *ProductHandler) GetAll(c *gin.Context) {
+	products, err := h.Service.GetAll(c)
+
+	if utils.HandleError(c, err, http.StatusInternalServerError, "Failed to fetch products") {
 		return
 	}
 
-	err := h.usecase.Create(c.Request.Context(), &product)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to create product"})
-		return
-	}
+	utils.Respond(c, http.StatusOK, true, "Lấy sản phẩm thành công", products)
 
-	c.JSON(http.StatusCreated, product)
-}
-
-func (h *ProductHandler) GetAllProducts(c *gin.Context) {
-	products, err := h.usecase.FetchAll(c)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to fetch products"})
-		return
-	}
-	c.JSON(http.StatusOK, products)
 }
 
 func (h *ProductHandler) GetPaginatedProducts(c *gin.Context) {
 	// Lấy page và limit từ query string, mặc định nếu không truyền
 	pageStr := c.DefaultQuery("page", "1")
 	limitStr := c.DefaultQuery("limit", "10")
+	query := c.DefaultQuery("q", "")
 
 	// Chuyển thành số nguyên
 	page, err := strconv.Atoi(pageStr)
@@ -57,54 +53,81 @@ func (h *ProductHandler) GetPaginatedProducts(c *gin.Context) {
 
 	offset := (page - 1) * limit
 
-	products, err := h.usecase.FetchPaginated(c.Request.Context(), limit, offset)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to fetch products"})
+	var filter model.ProductFilter
+	if utils.HandleError(c, c.ShouldBindQuery(&filter), http.StatusBadRequest, "Invalid filter params") {
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"page":     page,
-		"limit":    limit,
-		"products": products,
-	})
+
+	if utils.HandleError(c, filter.Validate(), http.StatusBadRequest, "") {
+		return
+	}
+
+	products, err := h.Service.GetPaginated(c.Request.Context(), limit, offset, query, filter)
+	if utils.HandleError(c, c.ShouldBindQuery(&filter), http.StatusInternalServerError, "Unable to fetch products") {
+		return
+	}
+
+	paged := utils.PaginatedData{
+		Page:  page,
+		Limit: limit,
+		Items: products,
+	}
+	utils.Respond(c, http.StatusOK, true, "Lấy sản phẩm thành công", paged)
 }
 
-func (h *ProductHandler) GetProductByID(c *gin.Context) {
-	idParam := c.Param("id")
-	id, err := strconv.ParseUint(idParam, 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid product ID"})
+func (h *ProductHandler) Create(c *gin.Context) {
+	var product model.Product
+	if utils.HandleError(c, c.ShouldBindJSON(&product), http.StatusBadRequest, "Invalid input") {
+		return
+	}
+	if utils.HandleError(c, product.Validate(), http.StatusBadRequest, "") {
 		return
 	}
 
-	product, err := h.usecase.FindByID(c, uint(id))
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+	err := h.Service.Create(c, &product)
+
+	if utils.HandleError(c, err, http.StatusInternalServerError, "") {
+		return
+	}
+	utils.Respond(c, http.StatusCreated, true, "Tạo phẩm thành công", product)
+}
+
+func (h *ProductHandler) GetByID(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if utils.HandleError(c, err, http.StatusBadRequest, "Invalid ID\"") {
 		return
 	}
 
-	c.JSON(http.StatusOK, product)
+	product, err := h.Service.GetByID(c, uint(id))
+	if utils.HandleError(c, err, http.StatusNotFound, "Product not found\"") {
+		return
+	}
+	utils.Respond(c, http.StatusOK, true, "Lấy sản phẩm thành công", product)
+
 }
 
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	idParam := c.Param("id")
+
 	id, err := strconv.ParseUint(idParam, 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid product ID"})
+	if utils.HandleError(c, err, http.StatusBadRequest, "Invalid ID\"") {
 		return
 	}
 
-	var updatedProduct domain.Product
-	if err := c.ShouldBindJSON(&updatedProduct); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	var updatedProduct model.Product
+	if utils.HandleError(c, c.ShouldBindJSON(&updatedProduct), http.StatusBadRequest, "Invalid input") {
 		return
 	}
 
-	err = h.usecase.Update(c.Request.Context(), uint(id), &updatedProduct)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update product"})
+	if utils.HandleError(c, updatedProduct.Validate(), http.StatusBadRequest, "") {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Product updated successfully"})
+	err = h.Service.Update(c.Request.Context(), uint64(id), &updatedProduct)
+	if utils.HandleError(c, err, http.StatusBadRequest, "") {
+		return
+	}
+
+	utils.Respond(c, http.StatusOK, true, "Product updated successfully", nil)
 }
