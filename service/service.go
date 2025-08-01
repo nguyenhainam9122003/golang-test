@@ -26,6 +26,10 @@ func (s *productService) GetByID(ctx context.Context, id uint) (*model.Product, 
 	return s.repo.FindByID(ctx, id)
 }
 
+func (s *productService) GetMaterialProduct(ctx context.Context) ([]model.Product, error) {
+	return s.repo.GetMaterialProduct(ctx)
+}
+
 func (s *productService) GetPaginated(ctx context.Context, limit, offset int, query string, filter model.ProductFilter) ([]model.Product, error) {
 	return s.repo.FetchPaginated(ctx, limit, offset, query, filter)
 }

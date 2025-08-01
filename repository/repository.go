@@ -43,6 +43,18 @@ func (r *productRepository) FetchAll(ctx context.Context) ([]model.Product, erro
 	return products, err
 }
 
+func (r *productRepository) GetMaterialProduct(ctx context.Context) ([]model.Product, error) {
+	var products []model.Product
+
+	err := r.db.WithContext(ctx).
+		Where("product_type = ?", "MATERIAL").
+		Limit(10).
+		Find(&products).
+		Error
+
+	return products, err
+}
+
 func (r *productRepository) FindByID(ctx context.Context, id uint) (*model.Product, error) {
 	var product model.Product
 	err := r.db.WithContext(ctx).

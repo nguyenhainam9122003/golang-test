@@ -56,6 +56,17 @@ type CreateProductPriceInput struct {
 	PriceHasVat    *int32 `json:"priceHasVat,omitempty"`
 }
 
+type MaterialProduct struct {
+	ID            string        `json:"id"`
+	Type          string        `json:"type"`
+	IsActive      bool          `json:"isActive"`
+	SellingStatus SellingStatus `json:"sellingStatus"`
+	Name          string        `json:"name"`
+	Code          string        `json:"code"`
+	ShortCode     *string       `json:"shortCode,omitempty"`
+	ProductType   ProductType   `json:"productType"`
+}
+
 type Mutation struct {
 }
 
@@ -94,22 +105,16 @@ type Product struct {
 	ProductPrice      *ProductPrice  `json:"productPrice,omitempty"`
 }
 
-type ProductConnection struct {
+type ProductFilter struct {
+	ProductType   *ProductType   `json:"productType,omitempty"`
+	SellingStatus *SellingStatus `json:"sellingStatus,omitempty"`
+}
+
+type ProductPagination struct {
 	Page  int32      `json:"page"`
 	Limit int32      `json:"limit"`
 	Items []*Product `json:"items"`
 	Total int32      `json:"total"`
-}
-
-type ProductFilter struct {
-	ProductType    *ProductType   `json:"productType,omitempty"`
-	SellingStatus  *SellingStatus `json:"sellingStatus,omitempty"`
-	IsActive       *bool          `json:"isActive,omitempty"`
-	CategoryID     *string        `json:"categoryId,omitempty"`
-	ProductGroupID *string        `json:"productGroupId,omitempty"`
-	PlatformID     *string        `json:"platformId,omitempty"`
-	CanPreOrder    *bool          `json:"canPreOrder,omitempty"`
-	Vat            *bool          `json:"vat,omitempty"`
 }
 
 type ProductPrice struct {

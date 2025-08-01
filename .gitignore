@@ -37,3 +37,7 @@ Thumbs.db
 bin/
 dist/
 build/
+
+# Ignore gqlgen generated code
+graph/generated/
+graph/model/models_gen.go

@@ -92,7 +92,7 @@ type Product {
   productPrice: ProductPrice
 }
 
-type ProductConnection {
+type ProductPagination  {
   page: Int!
   limit: Int!
   items: [Product!]!
@@ -102,12 +102,6 @@ type ProductConnection {
 input ProductFilter {
   productType: ProductType
   sellingStatus: SellingStatus
-  isActive: Boolean
-  categoryId: ID
-  productGroupId: ID
-  platformId: ID
-  canPreOrder: Boolean
-  vat: Boolean
 }
 
 input CreateProductInput {
@@ -202,15 +196,27 @@ input UpdateProductPriceInput {
   priceHasVat: Int
 }
 
+type MaterialProduct {
+  id: ID!
+  type: String!
+  isActive: Boolean!
+  sellingStatus: SellingStatus!
+  name: String!
+  code: String!
+  shortCode: String
+  productType: ProductType!
+}
+
 type Query {
   products: [Product!]!
   product(id: ID!): Product
+  getMaterialProduct: [MaterialProduct!]!
   productsPaginated(
     page: Int = 1
     limit: Int = 10
     query: String
     filter: ProductFilter
-  ): ProductConnection!
+  ): ProductPagination!
 }
 
 type Mutation {

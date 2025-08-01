@@ -6,6 +6,7 @@ import (
 	"os"
 	"test/db"
 	"test/graph"
+	"test/graph/generated"
 	"test/repository"
 	"test/service"
 
@@ -34,7 +35,7 @@ func main() {
 	}
 
 	// Create GraphQL server with schema
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: resolver}))
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: resolver}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
