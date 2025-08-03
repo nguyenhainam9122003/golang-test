@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func main1() {
+func main() {
 	godotenv.Load()
 	port := os.Getenv("PORT")
 	database := db.Init()

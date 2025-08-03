@@ -1,0 +1,105 @@
+# GraphQL schema for Product Management Service
+# This is a separate GraphQL service that calls HTTP API
+
+scalar Time
+
+type Product {
+  id: ID!
+  name: String!
+  code: String!
+  shortCode: String
+  productType: String!
+  vat: Boolean!
+  vatPercent: Int!
+  vatValue: Int!
+  categoryId: ID
+  productGroupId: ID
+  platformId: ID!
+  canPreOrder: Boolean!
+  imageUrl: String
+  note: String
+  minOrderQuantity: Int!
+  medusaId: String
+  originalCode: String
+  originalProductId: ID
+  searchTextV2: String
+  searchText: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+type MaterialProduct {
+  id: ID!
+  name: String!
+  description: String!
+  category: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type ProductPagination {
+  page: Int!
+  limit: Int!
+  items: [Product!]!
+  total: Int!
+}
+
+input CreateProductInput {
+  name: String!
+  code: String!
+  shortCode: String
+  productType: String!
+  vat: Boolean!
+  vatPercent: Int!
+  vatValue: Int!
+  categoryId: ID
+  productGroupId: ID
+  platformId: ID!
+  canPreOrder: Boolean!
+  imageUrl: String
+  note: String
+  minOrderQuantity: Int!
+  medusaId: String
+  originalCode: String
+  originalProductId: ID
+}
+
+input UpdateProductInput {
+  name: String
+  code: String
+  shortCode: String
+  productType: String
+  vat: Boolean
+  vatPercent: Int
+  vatValue: Int
+  categoryId: ID
+  productGroupId: ID
+  platformId: ID
+  canPreOrder: Boolean
+  imageUrl: String
+  note: String
+  minOrderQuantity: Int
+  medusaId: String
+  originalCode: String
+  originalProductId: ID
+}
+
+input ProductFilter {
+  category: String
+  minPrice: Float
+  maxPrice: Float
+  inStock: Boolean
+}
+
+type Query {
+  products: [Product!]!
+  product(id: ID!): Product
+  getMaterialProduct: [MaterialProduct!]!
+  productsPaginated(page: Int, limit: Int, query: String, filter: ProductFilter): ProductPagination!
+}
+
+type Mutation {
+  createProduct(input: CreateProductInput!): Product!
+  updateProduct(id: ID!, input: UpdateProductInput!): Product!
+  deleteProduct(id: ID!): Boolean!
+} 
