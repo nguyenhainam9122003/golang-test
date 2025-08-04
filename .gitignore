@@ -37,3 +37,13 @@ Thumbs.db
 bin/
 dist/
 build/
+
+# Generated files
+grpc_server
+graphql_server
+graphql_server_grpc
+go_build_test
+
+# Proto generated files
+proto/*.pb.go
+proto/product/*.pb.go
