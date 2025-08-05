@@ -30,7 +30,7 @@ go.work.sum
 Thumbs.db
 
 # Env files
-.env
+grpc_server/.env
 .env.*
 
 # Build output

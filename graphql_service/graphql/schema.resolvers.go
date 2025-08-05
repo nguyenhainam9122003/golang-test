@@ -7,216 +7,406 @@ package graphql
 import (
 	"context"
 	"fmt"
-	"test/graphql_service/models"
+	"test/graphql_service/graphql/generated"
+	"test/graphql_service/model"
 )
 
-// ID is the resolver for the id field.
-func (r *materialProductResolver) ID(ctx context.Context, obj *models.MaterialProduct) (string, error) {
-	panic(fmt.Errorf("not implemented: ID - id"))
+// Warranty is the resolver for the warranty field.
+func (r *digitalProductResolver) Warranty(ctx context.Context, obj *model.DigitalProduct) (*int32, error) {
+	panic(fmt.Errorf("not implemented: Warranty - warranty"))
+}
+
+// VatPercent is the resolver for the vatPercent field.
+func (r *digitalProductResolver) VatPercent(ctx context.Context, obj *model.DigitalProduct) (int32, error) {
+	panic(fmt.Errorf("not implemented: VatPercent - vatPercent"))
+}
+
+// VatValue is the resolver for the vatValue field.
+func (r *digitalProductResolver) VatValue(ctx context.Context, obj *model.DigitalProduct) (int32, error) {
+	panic(fmt.Errorf("not implemented: VatValue - vatValue"))
+}
+
+// CopyrightTerm is the resolver for the copyrightTerm field.
+func (r *digitalProductResolver) CopyrightTerm(ctx context.Context, obj *model.DigitalProduct) (*int32, error) {
+	panic(fmt.Errorf("not implemented: CopyrightTerm - copyrightTerm"))
+}
+
+// MinOrderQuantity is the resolver for the minOrderQuantity field.
+func (r *digitalProductResolver) MinOrderQuantity(ctx context.Context, obj *model.DigitalProduct) (int32, error) {
+	panic(fmt.Errorf("not implemented: MinOrderQuantity - minOrderQuantity"))
+}
+
+// Warranty is the resolver for the warranty field.
+func (r *materialProductResolver) Warranty(ctx context.Context, obj *model.MaterialProduct) (*int32, error) {
+	panic(fmt.Errorf("not implemented: Warranty - warranty"))
+}
+
+// VatPercent is the resolver for the vatPercent field.
+func (r *materialProductResolver) VatPercent(ctx context.Context, obj *model.MaterialProduct) (int32, error) {
+	panic(fmt.Errorf("not implemented: VatPercent - vatPercent"))
+}
+
+// VatValue is the resolver for the vatValue field.
+func (r *materialProductResolver) VatValue(ctx context.Context, obj *model.MaterialProduct) (int32, error) {
+	panic(fmt.Errorf("not implemented: VatValue - vatValue"))
+}
+
+// CopyrightTerm is the resolver for the copyrightTerm field.
+func (r *materialProductResolver) CopyrightTerm(ctx context.Context, obj *model.MaterialProduct) (*int32, error) {
+	panic(fmt.Errorf("not implemented: CopyrightTerm - copyrightTerm"))
+}
+
+// MinOrderQuantity is the resolver for the minOrderQuantity field.
+func (r *materialProductResolver) MinOrderQuantity(ctx context.Context, obj *model.MaterialProduct) (int32, error) {
+	panic(fmt.Errorf("not implemented: MinOrderQuantity - minOrderQuantity"))
 }
 
 // CreateProduct is the resolver for the createProduct field.
-func (r *mutationResolver) CreateProduct(ctx context.Context, input models.CreateProductInput) (*models.Product, error) {
-	return r.ProductHTTPClient.CreateProduct(ctx, input)
+func (r *mutationResolver) CreateProduct(ctx context.Context, input model.CreateProductInput) (model.Product, error) {
+	panic(fmt.Errorf("not implemented: CreateProduct - createProduct"))
 }
 
 // UpdateProduct is the resolver for the updateProduct field.
-func (r *mutationResolver) UpdateProduct(ctx context.Context, id string, input models.UpdateProductInput) (*models.Product, error) {
-	return r.ProductHTTPClient.UpdateProduct(ctx, id, input)
+func (r *mutationResolver) UpdateProduct(ctx context.Context, id string, input model.UpdateProductInput) (model.Product, error) {
+	panic(fmt.Errorf("not implemented: UpdateProduct - updateProduct"))
 }
 
 // DeleteProduct is the resolver for the deleteProduct field.
 func (r *mutationResolver) DeleteProduct(ctx context.Context, id string) (bool, error) {
-	// TODO: Implement delete via HTTP API
-	// For now, return success
-	return true, nil
+	panic(fmt.Errorf("not implemented: DeleteProduct - deleteProduct"))
 }
 
-// ID is the resolver for the id field.
-func (r *productResolver) ID(ctx context.Context, obj *models.Product) (string, error) {
-	return fmt.Sprintf("%d", obj.ID), nil
+// Page is the resolver for the page field.
+func (r *productPaginationResolver) Page(ctx context.Context, obj *model.ProductPagination) (int32, error) {
+	panic(fmt.Errorf("not implemented: Page - page"))
 }
 
-// CategoryID is the resolver for the categoryId field.
-func (r *productResolver) CategoryID(ctx context.Context, obj *models.Product) (*string, error) {
-	if obj.CategoryID == nil {
-		return nil, nil
-	}
-	result := fmt.Sprintf("%d", *obj.CategoryID)
-	return &result, nil
+// Limit is the resolver for the limit field.
+func (r *productPaginationResolver) Limit(ctx context.Context, obj *model.ProductPagination) (int32, error) {
+	panic(fmt.Errorf("not implemented: Limit - limit"))
 }
 
-// ProductGroupID is the resolver for the productGroupId field.
-func (r *productResolver) ProductGroupID(ctx context.Context, obj *models.Product) (*string, error) {
-	if obj.ProductGroupID == nil {
-		return nil, nil
-	}
-	result := fmt.Sprintf("%d", *obj.ProductGroupID)
-	return &result, nil
+// Total is the resolver for the total field.
+func (r *productPaginationResolver) Total(ctx context.Context, obj *model.ProductPagination) (int32, error) {
+	panic(fmt.Errorf("not implemented: Total - total"))
 }
 
-// PlatformID is the resolver for the platformId field.
-func (r *productResolver) PlatformID(ctx context.Context, obj *models.Product) (string, error) {
-	return fmt.Sprintf("%d", obj.PlatformID), nil
+// Level1Price is the resolver for the level1Price field.
+func (r *productPriceResolver) Level1Price(ctx context.Context, obj *model.ProductPrice) (int32, error) {
+	panic(fmt.Errorf("not implemented: Level1Price - level1Price"))
 }
 
-// OriginalProductID is the resolver for the originalProductId field.
-func (r *productResolver) OriginalProductID(ctx context.Context, obj *models.Product) (*string, error) {
-	if obj.OriginalProductID == nil {
-		return nil, nil
-	}
-	result := fmt.Sprintf("%d", *obj.OriginalProductID)
-	return &result, nil
+// Level2Price is the resolver for the level2Price field.
+func (r *productPriceResolver) Level2Price(ctx context.Context, obj *model.ProductPrice) (int32, error) {
+	panic(fmt.Errorf("not implemented: Level2Price - level2Price"))
+}
+
+// Level3Price is the resolver for the level3Price field.
+func (r *productPriceResolver) Level3Price(ctx context.Context, obj *model.ProductPrice) (int32, error) {
+	panic(fmt.Errorf("not implemented: Level3Price - level3Price"))
+}
+
+// Level4Price is the resolver for the level4Price field.
+func (r *productPriceResolver) Level4Price(ctx context.Context, obj *model.ProductPrice) (int32, error) {
+	panic(fmt.Errorf("not implemented: Level4Price - level4Price"))
+}
+
+// Level1Quantity is the resolver for the level1Quantity field.
+func (r *productPriceResolver) Level1Quantity(ctx context.Context, obj *model.ProductPrice) (*int32, error) {
+	panic(fmt.Errorf("not implemented: Level1Quantity - level1Quantity"))
+}
+
+// Level1Discount is the resolver for the level1Discount field.
+func (r *productPriceResolver) Level1Discount(ctx context.Context, obj *model.ProductPrice) (*int32, error) {
+	panic(fmt.Errorf("not implemented: Level1Discount - level1Discount"))
+}
+
+// Level2Quantity is the resolver for the level2Quantity field.
+func (r *productPriceResolver) Level2Quantity(ctx context.Context, obj *model.ProductPrice) (*int32, error) {
+	panic(fmt.Errorf("not implemented: Level2Quantity - level2Quantity"))
+}
+
+// Level2Discount is the resolver for the level2Discount field.
+func (r *productPriceResolver) Level2Discount(ctx context.Context, obj *model.ProductPrice) (*int32, error) {
+	panic(fmt.Errorf("not implemented: Level2Discount - level2Discount"))
+}
+
+// Level3Quantity is the resolver for the level3Quantity field.
+func (r *productPriceResolver) Level3Quantity(ctx context.Context, obj *model.ProductPrice) (*int32, error) {
+	panic(fmt.Errorf("not implemented: Level3Quantity - level3Quantity"))
+}
+
+// Level3Discount is the resolver for the level3Discount field.
+func (r *productPriceResolver) Level3Discount(ctx context.Context, obj *model.ProductPrice) (*int32, error) {
+	panic(fmt.Errorf("not implemented: Level3Discount - level3Discount"))
+}
+
+// Level4Quantity is the resolver for the level4Quantity field.
+func (r *productPriceResolver) Level4Quantity(ctx context.Context, obj *model.ProductPrice) (*int32, error) {
+	panic(fmt.Errorf("not implemented: Level4Quantity - level4Quantity"))
+}
+
+// Level4Discount is the resolver for the level4Discount field.
+func (r *productPriceResolver) Level4Discount(ctx context.Context, obj *model.ProductPrice) (*int32, error) {
+	panic(fmt.Errorf("not implemented: Level4Discount - level4Discount"))
+}
+
+// PriceHasVat is the resolver for the priceHasVat field.
+func (r *productPriceResolver) PriceHasVat(ctx context.Context, obj *model.ProductPrice) (*int32, error) {
+	panic(fmt.Errorf("not implemented: PriceHasVat - priceHasVat"))
 }
 
 // Products is the resolver for the products field.
-func (r *queryResolver) Products(ctx context.Context) ([]*models.Product, error) {
-	products, err := r.ProductHTTPClient.GetAllProducts(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	// Convert to pointers
-	var result []*models.Product
-	for i := range products {
-		result = append(result, &products[i])
-	}
-
-	return result, nil
+func (r *queryResolver) Products(ctx context.Context) ([]model.Product, error) {
+	panic(fmt.Errorf("not implemented: Products - products"))
 }
 
 // Product is the resolver for the product field.
-func (r *queryResolver) Product(ctx context.Context, id string) (*models.Product, error) {
-	fmt.Printf("GraphQL Product resolver called with id: %s\n", id)
-	
-	product, err := r.ProductHTTPClient.GetProductByID(ctx, id)
-	if err != nil {
-		fmt.Printf("Error getting product: %v\n", err)
-		return nil, err
-	}
-	
-	fmt.Printf("Product returned: %+v\n", product)
-	return product, nil
+func (r *queryResolver) Product(ctx context.Context, id string) (model.Product, error) {
+	return r.productClient.GetProduct(ctx, id)
 }
 
 // GetMaterialProduct is the resolver for the getMaterialProduct field.
-func (r *queryResolver) GetMaterialProduct(ctx context.Context) ([]*models.MaterialProduct, error) {
-	// Get all products and filter for materials
-	products, err := r.ProductHTTPClient.GetAllProducts(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	var materialProducts []*models.MaterialProduct
-	for _, product := range products {
-		// Filter for material products (you can adjust this logic)
-		if product.ProductType == "MATERIAL" {
-			materialProduct := &models.MaterialProduct{
-				ID:          product.ID,
-				Name:        product.Name,
-				Description: product.Code, // Use code as description
-				Category:    product.ProductType,
-				CreatedAt:   product.CreatedAt,
-				UpdatedAt:   product.UpdatedAt,
-			}
-			materialProducts = append(materialProducts, materialProduct)
-		}
-	}
-
-	return materialProducts, nil
+func (r *queryResolver) GetMaterialProduct(ctx context.Context) ([]*model.MaterialProduct, error) {
+	panic(fmt.Errorf("not implemented: GetMaterialProduct - getMaterialProduct"))
 }
 
 // ProductsPaginated is the resolver for the productsPaginated field.
-func (r *queryResolver) ProductsPaginated(ctx context.Context, page *int, limit *int, query *string, filter *models.ProductFilter) (*models.ProductPagination, error) {
-	// Set default values
-	pageValue := 1
-	if page != nil {
-		pageValue = *page
-	}
-
-	limitValue := 10
-	if limit != nil {
-		limitValue = *limit
-	}
-
-	queryValue := ""
-	if query != nil {
-		queryValue = *query
-	}
-
-	filterValue := models.ProductFilter{}
-	if filter != nil {
-		filterValue = *filter
-	}
-
-	return r.ProductHTTPClient.GetPaginatedProducts(ctx, pageValue, limitValue, queryValue, filterValue)
+func (r *queryResolver) ProductsPaginated(ctx context.Context, page *int32, limit *int32, query *string, filter *model.ProductFilter) (*model.ProductPagination, error) {
+	panic(fmt.Errorf("not implemented: ProductsPaginated - productsPaginated"))
 }
 
-// CategoryID is the resolver for the categoryId field.
-func (r *createProductInputResolver) CategoryID(ctx context.Context, obj *models.CreateProductInput, data *string) error {
-	panic(fmt.Errorf("not implemented: CategoryID - categoryId"))
+// Warranty is the resolver for the warranty field.
+func (r *createProductInputResolver) Warranty(ctx context.Context, obj *model.CreateProductInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Warranty - warranty"))
 }
 
-// ProductGroupID is the resolver for the productGroupId field.
-func (r *createProductInputResolver) ProductGroupID(ctx context.Context, obj *models.CreateProductInput, data *string) error {
-	panic(fmt.Errorf("not implemented: ProductGroupID - productGroupId"))
+// VatPercent is the resolver for the vatPercent field.
+func (r *createProductInputResolver) VatPercent(ctx context.Context, obj *model.CreateProductInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: VatPercent - vatPercent"))
 }
 
-// PlatformID is the resolver for the platformId field.
-func (r *createProductInputResolver) PlatformID(ctx context.Context, obj *models.CreateProductInput, data string) error {
-	panic(fmt.Errorf("not implemented: PlatformID - platformId"))
+// VatValue is the resolver for the vatValue field.
+func (r *createProductInputResolver) VatValue(ctx context.Context, obj *model.CreateProductInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: VatValue - vatValue"))
 }
 
-// OriginalProductID is the resolver for the originalProductId field.
-func (r *createProductInputResolver) OriginalProductID(ctx context.Context, obj *models.CreateProductInput, data *string) error {
-	panic(fmt.Errorf("not implemented: OriginalProductID - originalProductId"))
+// CopyrightTerm is the resolver for the copyrightTerm field.
+func (r *createProductInputResolver) CopyrightTerm(ctx context.Context, obj *model.CreateProductInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: CopyrightTerm - copyrightTerm"))
 }
 
-// CategoryID is the resolver for the categoryId field.
-func (r *updateProductInputResolver) CategoryID(ctx context.Context, obj *models.UpdateProductInput, data *string) error {
-	panic(fmt.Errorf("not implemented: CategoryID - categoryId"))
+// MinOrderQuantity is the resolver for the minOrderQuantity field.
+func (r *createProductInputResolver) MinOrderQuantity(ctx context.Context, obj *model.CreateProductInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: MinOrderQuantity - minOrderQuantity"))
 }
 
-// ProductGroupID is the resolver for the productGroupId field.
-func (r *updateProductInputResolver) ProductGroupID(ctx context.Context, obj *models.UpdateProductInput, data *string) error {
-	panic(fmt.Errorf("not implemented: ProductGroupID - productGroupId"))
+// Level1Price is the resolver for the level1Price field.
+func (r *createProductPriceInputResolver) Level1Price(ctx context.Context, obj *model.CreateProductPriceInput, data int32) error {
+	panic(fmt.Errorf("not implemented: Level1Price - level1Price"))
 }
 
-// PlatformID is the resolver for the platformId field.
-func (r *updateProductInputResolver) PlatformID(ctx context.Context, obj *models.UpdateProductInput, data *string) error {
-	panic(fmt.Errorf("not implemented: PlatformID - platformId"))
+// Level2Price is the resolver for the level2Price field.
+func (r *createProductPriceInputResolver) Level2Price(ctx context.Context, obj *model.CreateProductPriceInput, data int32) error {
+	panic(fmt.Errorf("not implemented: Level2Price - level2Price"))
 }
 
-// OriginalProductID is the resolver for the originalProductId field.
-func (r *updateProductInputResolver) OriginalProductID(ctx context.Context, obj *models.UpdateProductInput, data *string) error {
-	panic(fmt.Errorf("not implemented: OriginalProductID - originalProductId"))
+// Level3Price is the resolver for the level3Price field.
+func (r *createProductPriceInputResolver) Level3Price(ctx context.Context, obj *model.CreateProductPriceInput, data int32) error {
+	panic(fmt.Errorf("not implemented: Level3Price - level3Price"))
 }
 
-// MaterialProduct returns MaterialProductResolver implementation.
-func (r *Resolver) MaterialProduct() MaterialProductResolver { return &materialProductResolver{r} }
+// Level4Price is the resolver for the level4Price field.
+func (r *createProductPriceInputResolver) Level4Price(ctx context.Context, obj *model.CreateProductPriceInput, data int32) error {
+	panic(fmt.Errorf("not implemented: Level4Price - level4Price"))
+}
 
-// Mutation returns MutationResolver implementation.
-func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
+// Level1Quantity is the resolver for the level1Quantity field.
+func (r *createProductPriceInputResolver) Level1Quantity(ctx context.Context, obj *model.CreateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level1Quantity - level1Quantity"))
+}
 
-// Product returns ProductResolver implementation.
-func (r *Resolver) Product() ProductResolver { return &productResolver{r} }
+// Level1Discount is the resolver for the level1Discount field.
+func (r *createProductPriceInputResolver) Level1Discount(ctx context.Context, obj *model.CreateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level1Discount - level1Discount"))
+}
 
-// Query returns QueryResolver implementation.
-func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
+// Level2Quantity is the resolver for the level2Quantity field.
+func (r *createProductPriceInputResolver) Level2Quantity(ctx context.Context, obj *model.CreateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level2Quantity - level2Quantity"))
+}
 
-// CreateProductInput returns CreateProductInputResolver implementation.
-func (r *Resolver) CreateProductInput() CreateProductInputResolver {
+// Level2Discount is the resolver for the level2Discount field.
+func (r *createProductPriceInputResolver) Level2Discount(ctx context.Context, obj *model.CreateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level2Discount - level2Discount"))
+}
+
+// Level3Quantity is the resolver for the level3Quantity field.
+func (r *createProductPriceInputResolver) Level3Quantity(ctx context.Context, obj *model.CreateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level3Quantity - level3Quantity"))
+}
+
+// Level3Discount is the resolver for the level3Discount field.
+func (r *createProductPriceInputResolver) Level3Discount(ctx context.Context, obj *model.CreateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level3Discount - level3Discount"))
+}
+
+// Level4Quantity is the resolver for the level4Quantity field.
+func (r *createProductPriceInputResolver) Level4Quantity(ctx context.Context, obj *model.CreateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level4Quantity - level4Quantity"))
+}
+
+// Level4Discount is the resolver for the level4Discount field.
+func (r *createProductPriceInputResolver) Level4Discount(ctx context.Context, obj *model.CreateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level4Discount - level4Discount"))
+}
+
+// PriceHasVat is the resolver for the priceHasVat field.
+func (r *createProductPriceInputResolver) PriceHasVat(ctx context.Context, obj *model.CreateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: PriceHasVat - priceHasVat"))
+}
+
+// Warranty is the resolver for the warranty field.
+func (r *updateProductInputResolver) Warranty(ctx context.Context, obj *model.UpdateProductInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Warranty - warranty"))
+}
+
+// VatPercent is the resolver for the vatPercent field.
+func (r *updateProductInputResolver) VatPercent(ctx context.Context, obj *model.UpdateProductInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: VatPercent - vatPercent"))
+}
+
+// VatValue is the resolver for the vatValue field.
+func (r *updateProductInputResolver) VatValue(ctx context.Context, obj *model.UpdateProductInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: VatValue - vatValue"))
+}
+
+// CopyrightTerm is the resolver for the copyrightTerm field.
+func (r *updateProductInputResolver) CopyrightTerm(ctx context.Context, obj *model.UpdateProductInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: CopyrightTerm - copyrightTerm"))
+}
+
+// MinOrderQuantity is the resolver for the minOrderQuantity field.
+func (r *updateProductInputResolver) MinOrderQuantity(ctx context.Context, obj *model.UpdateProductInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: MinOrderQuantity - minOrderQuantity"))
+}
+
+// Level1Price is the resolver for the level1Price field.
+func (r *updateProductPriceInputResolver) Level1Price(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level1Price - level1Price"))
+}
+
+// Level2Price is the resolver for the level2Price field.
+func (r *updateProductPriceInputResolver) Level2Price(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level2Price - level2Price"))
+}
+
+// Level3Price is the resolver for the level3Price field.
+func (r *updateProductPriceInputResolver) Level3Price(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level3Price - level3Price"))
+}
+
+// Level4Price is the resolver for the level4Price field.
+func (r *updateProductPriceInputResolver) Level4Price(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level4Price - level4Price"))
+}
+
+// Level1Quantity is the resolver for the level1Quantity field.
+func (r *updateProductPriceInputResolver) Level1Quantity(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level1Quantity - level1Quantity"))
+}
+
+// Level1Discount is the resolver for the level1Discount field.
+func (r *updateProductPriceInputResolver) Level1Discount(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level1Discount - level1Discount"))
+}
+
+// Level2Quantity is the resolver for the level2Quantity field.
+func (r *updateProductPriceInputResolver) Level2Quantity(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level2Quantity - level2Quantity"))
+}
+
+// Level2Discount is the resolver for the level2Discount field.
+func (r *updateProductPriceInputResolver) Level2Discount(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level2Discount - level2Discount"))
+}
+
+// Level3Quantity is the resolver for the level3Quantity field.
+func (r *updateProductPriceInputResolver) Level3Quantity(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level3Quantity - level3Quantity"))
+}
+
+// Level3Discount is the resolver for the level3Discount field.
+func (r *updateProductPriceInputResolver) Level3Discount(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level3Discount - level3Discount"))
+}
+
+// Level4Quantity is the resolver for the level4Quantity field.
+func (r *updateProductPriceInputResolver) Level4Quantity(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level4Quantity - level4Quantity"))
+}
+
+// Level4Discount is the resolver for the level4Discount field.
+func (r *updateProductPriceInputResolver) Level4Discount(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: Level4Discount - level4Discount"))
+}
+
+// PriceHasVat is the resolver for the priceHasVat field.
+func (r *updateProductPriceInputResolver) PriceHasVat(ctx context.Context, obj *model.UpdateProductPriceInput, data *int32) error {
+	panic(fmt.Errorf("not implemented: PriceHasVat - priceHasVat"))
+}
+
+// DigitalProduct returns generated.DigitalProductResolver implementation.
+func (r *Resolver) DigitalProduct() generated.DigitalProductResolver {
+	return &digitalProductResolver{r}
+}
+
+// MaterialProduct returns generated.MaterialProductResolver implementation.
+func (r *Resolver) MaterialProduct() generated.MaterialProductResolver {
+	return &materialProductResolver{r}
+}
+
+// Mutation returns generated.MutationResolver implementation.
+func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
+
+// ProductPagination returns generated.ProductPaginationResolver implementation.
+func (r *Resolver) ProductPagination() generated.ProductPaginationResolver {
+	return &productPaginationResolver{r}
+}
+
+// ProductPrice returns generated.ProductPriceResolver implementation.
+func (r *Resolver) ProductPrice() generated.ProductPriceResolver { return &productPriceResolver{r} }
+
+// Query returns generated.QueryResolver implementation.
+func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
+
+// CreateProductInput returns generated.CreateProductInputResolver implementation.
+func (r *Resolver) CreateProductInput() generated.CreateProductInputResolver {
 	return &createProductInputResolver{r}
 }
 
-// UpdateProductInput returns UpdateProductInputResolver implementation.
-func (r *Resolver) UpdateProductInput() UpdateProductInputResolver {
+// CreateProductPriceInput returns generated.CreateProductPriceInputResolver implementation.
+func (r *Resolver) CreateProductPriceInput() generated.CreateProductPriceInputResolver {
+	return &createProductPriceInputResolver{r}
+}
+
+// UpdateProductInput returns generated.UpdateProductInputResolver implementation.
+func (r *Resolver) UpdateProductInput() generated.UpdateProductInputResolver {
 	return &updateProductInputResolver{r}
 }
 
+// UpdateProductPriceInput returns generated.UpdateProductPriceInputResolver implementation.
+func (r *Resolver) UpdateProductPriceInput() generated.UpdateProductPriceInputResolver {
+	return &updateProductPriceInputResolver{r}
+}
+
+type digitalProductResolver struct{ *Resolver }
 type materialProductResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
-type productResolver struct{ *Resolver }
+type productPaginationResolver struct{ *Resolver }
+type productPriceResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type createProductInputResolver struct{ *Resolver }
+type createProductPriceInputResolver struct{ *Resolver }
 type updateProductInputResolver struct{ *Resolver }
+type updateProductPriceInputResolver struct{ *Resolver }

@@ -1,0 +1,176 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "proto/gen/product;product";
+
+import "google/protobuf/timestamp.proto";
+
+// Product message
+message Product {
+  uint64 id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  string type = 4;
+  optional uint64 uom_id = 5;
+  bool is_active = 6;
+  SellingStatus selling_status = 7;
+  string name = 8;
+  string code = 9;
+  optional string short_code = 10;
+  ProductType product_type = 11;
+  bool vat = 12;
+  optional VatType vat_type = 13;
+  optional uint64 warranty = 14;
+  optional WarrantyUnit warranty_unit = 15;
+  int32 vat_percent = 16;
+  int64 vat_value = 17;
+  optional uint64 category_id = 18;
+  optional uint64 product_group_id = 19;
+  uint64 platform_id = 20;
+  bool can_pre_order = 21;
+  optional uint64 copyright_term = 22;
+  optional CopyrightUnit copyright_unit = 23;
+  optional string image_url = 24;
+  optional string note = 25;
+  int64 min_order_quantity = 26;
+  optional string medusa_id = 27;
+  optional string original_code = 28;
+  optional uint64 original_product_id = 29;
+  optional string search_text_v2 = 30;
+  optional string search_text = 31;
+  optional ProductPrice product_price = 32;
+}
+
+// ProductPrice message
+message ProductPrice {
+  uint64 id = 1;
+  optional uint64 product_id = 2;
+  uint64 platform_id = 3;
+  int64 level1_price = 4;
+  int64 level2_price = 5;
+  int64 level3_price = 6;
+  int64 level4_price = 7;
+  optional int64 level1_quantity = 8;
+  optional int64 level1_discount = 9;
+  optional int64 level2_quantity = 10;
+  optional int64 level2_discount = 11;
+  optional int64 level3_quantity = 12;
+  optional int64 level3_discount = 13;
+  optional int64 level4_quantity = 14;
+  optional int64 level4_discount = 15;
+  optional int64 price_has_vat = 16;
+  google.protobuf.Timestamp created_at = 17;
+  google.protobuf.Timestamp updated_at = 18;
+}
+
+// ProductFilter message
+message ProductFilter {
+  optional ProductType product_type = 1;
+  optional SellingStatus selling_status = 2;
+}
+
+// CreateProductRequest
+message CreateProductRequest {
+  Product product = 1;
+}
+
+// CreateProductResponse
+message CreateProductResponse {
+  Product product = 1;
+}
+
+// GetProductRequest
+message GetProductRequest {
+  uint64 id = 1;
+}
+
+// GetProductResponse
+message GetProductResponse {
+  Product product = 1;
+}
+
+// GetProductsRequest
+message GetProductsRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  optional string query = 3;
+  optional ProductFilter filter = 4;
+}
+
+// GetProductsResponse
+message GetProductsResponse {
+  repeated Product products = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 limit = 4;
+}
+
+// UpdateProductRequest
+message UpdateProductRequest {
+  uint64 id = 1;
+  Product product = 2;
+}
+
+// UpdateProductResponse
+message UpdateProductResponse {
+  Product product = 1;
+}
+
+// DeleteProductRequest
+message DeleteProductRequest {
+  uint64 id = 1;
+}
+
+// DeleteProductResponse
+message DeleteProductResponse {
+  bool success = 1;
+}
+
+// Enums
+enum SellingStatus {
+  SELLING_STATUS_UNSPECIFIED = 0;
+  SELLING_STATUS_AVAILABLE = 1;
+  SELLING_STATUS_CONTACT = 2;
+  SELLING_STATUS_UNAVAILABLE = 3;
+}
+
+enum ProductType {
+  PRODUCT_TYPE_UNSPECIFIED = 0;
+  PRODUCT_TYPE_MATERIAL = 1;
+  PRODUCT_TYPE_SERVICE = 2;
+  PRODUCT_TYPE_VOUCHER = 3;
+  PRODUCT_TYPE_KEY_LICENSE = 4;
+  PRODUCT_TYPE_ACCOUNT = 5;
+}
+
+enum VatType {
+  VAT_TYPE_UNSPECIFIED = 0;
+  VAT_TYPE_REQUIRED = 1;
+  VAT_TYPE_NOT_REQUIRED = 2;
+  VAT_TYPE_OPTIONAL = 3;
+}
+
+enum WarrantyUnit {
+  WARRANTY_UNIT_UNSPECIFIED = 0;
+  WARRANTY_UNIT_YEAR = 1;
+  WARRANTY_UNIT_MONTH = 2;
+  WARRANTY_UNIT_DAY = 3;
+}
+
+enum CopyrightUnit {
+  COPYRIGHT_UNIT_UNSPECIFIED = 0;
+  COPYRIGHT_UNIT_YEAR = 1;
+  COPYRIGHT_UNIT_MONTH = 2;
+  COPYRIGHT_UNIT_DAY = 3;
+  COPYRIGHT_UNIT_FOREVER = 4;
+}
+
+// ProductService definition
+service ProductService {
+  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse);
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse);
+  rpc GetProducts(GetProductsRequest) returns (GetProductsResponse);
+  rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse);
+  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse);
+}

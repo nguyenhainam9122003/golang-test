@@ -1,49 +1,40 @@
 package main
 
 import (
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/joho/godotenv"
+	"google.golang.org/grpc"
 	"log"
 	"net/http"
 	"os"
 	"test/graphql_service/graphql"
-	"test/graphql_service/http_client"
-
-	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/joho/godotenv"
+	"test/graphql_service/graphql/generated"
 )
 
 const defaultPort = "8081" // GraphQL service chạy trên port khác
 
 func main() {
 	godotenv.Load()
-	port := os.Getenv("GRAPHQL_PORT")
+	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
 	}
-
-	// Khởi tạo HTTP client để gọi API
-	apiBaseURL := os.Getenv("API_BASE_URL")
-	if apiBaseURL == "" {
-		apiBaseURL = "http://localhost:8080" // Default API server
+	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Did not connect: %v", err)
 	}
+	defer conn.Close()
 
-	httpClient := http_client.NewProductHTTPClient(apiBaseURL)
+	resolver := graphql.NewResolver(conn)
 
-	// Tạo GraphQL resolver với HTTP client
-	resolver := &graphql.Resolver{
-		ProductHTTPClient: httpClient,
-	}
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: resolver}))
 
-	// Tạo GraphQL server
-	srv := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{Resolvers: resolver}))
-
-	// Setup routes
-	http.Handle("/", playground.Handler("GraphQL Playground", "/query"))
+	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
 
-	log.Printf("GraphQL service starting on http://localhost:%s", port)
-	log.Printf("GraphQL playground available at http://localhost:%s", port)
-	log.Printf("API base URL: %s", apiBaseURL)
-	
+	log.Printf("🚀 GraphQL server listening on :%s", port)
+	log.Printf("📊 Connect to http://localhost:%s/ for GraphQL playground", port)
+	log.Printf("🔗 GraphQL → gRPC → Service → Database")
 	log.Fatal(http.ListenAndServe(":"+port, nil))
-} 
+}

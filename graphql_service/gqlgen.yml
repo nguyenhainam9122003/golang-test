@@ -1,53 +1,29 @@
-# Where are all the schema files located?
+# Where are all the schema files located? globs are supported eg  src/**/*.graphqls
 schema:
   - graphql/*.graphqls
 
-# Where should the generated server code go?
 exec:
-  filename: graphql/generated.go
-  package: graphql
+  package: generated
+  layout: single-file # Only other option is "follow-schema," ie multi-file.
 
-# Where should any generated models go?
+  filename: graphql/generated/generated.go
+
 model:
-  filename: models/generated.go
-  package: models
+  filename: model/models_gen.go
+  package: model
 
-# Where should the resolver implementations go?
 resolver:
-  layout: follow-schema
-  dir: graphql
   package: graphql
+  layout: follow-schema
+
+  dir: graphql
   filename_template: "{name}.resolvers.go"
 
-# Optional: turn on use ` + "`" + `gqlgen:"fieldName"` + "`" + ` tags in your models
-# struct_tag: json
+call_argument_directives_with_null: true
 
-# Optional: turn on to use []Thing instead of []*Thing
-# omit_slice_element_pointers: false
-
-# Optional: turn on to exclude Is<Name>() methods for interface types
-# omit_interface_checks: false
-
-# Optional: turn on to exclude the gqlgen generate version header
-# omit_gqlgen_version: false
-
-# Optional: turn on to exclude the complexity limit from type generation
-# omit_complexity: false
-
-# Optional: turn on to not generate any file notice headers
-# omit_generated_notice: false
-
-# gqlgen will search for any type names in the schema in these go packages
-# if they match it will use them, otherwise it will generate them.
 autobind:
-  - "test/graphql_service/models"
+  - "test/graphql_service/model"
 
-# This section declares type mapping between the GraphQL and go type systems
-#
-# The first line in each type will be used as defaults for resolver arguments and
-# modelgen, the second line will be used when the name is a resolver input type.
-#
-# If you want to use a different type for your GraphQL type, you can override it here.
 models:
   ID:
     model:
@@ -55,8 +31,16 @@ models:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
+
+  UUID:
+    model:
+      - github.com/99designs/gqlgen/graphql.UUID
+
   Int:
+    model:
+      - github.com/99designs/gqlgen/graphql.Int32
+      -
+  Int64:
     model:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
-      - github.com/99designs/gqlgen/graphql.Int32 
