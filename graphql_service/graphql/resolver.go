@@ -1,10 +1,8 @@
 package graphql
 
 import (
-	"context"
 	"google.golang.org/grpc"
 	"test/graphql_service/grpc_client"
-	"test/graphql_service/model"
 )
 
 type Resolver struct {
@@ -17,6 +15,4 @@ func NewResolver(conn *grpc.ClientConn) *Resolver {
 	}
 }
 
-func (r *queryResolver) GetProductByID(ctx context.Context, id string) (*model.MaterialProduct, error) {
-	return r.productClient.GetProduct(ctx, id)
-}
+
