@@ -1,4 +1,4 @@
-module test/grpc_service
+module test/core
 
 go 1.24
 

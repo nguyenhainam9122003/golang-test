@@ -3,8 +3,8 @@ package server
 import (
 	"context"
 	"log"
-	"test/grpc_service/domain"
-	"test/grpc_service/model"
+	"test/core/domain"
+	"test/core/model"
 	protoProduct "test/proto/gen/product"
 
 	"google.golang.org/grpc/codes"

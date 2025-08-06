@@ -3,11 +3,12 @@ package grpc_client
 import (
 	"context"
 	"fmt"
-	"google.golang.org/grpc"
 	"log"
 	"strconv"
 	"test/graphql_service/model"
 	pb "test/proto/gen/product"
+
+	"google.golang.org/grpc"
 )
 
 type ProductClient struct {
@@ -42,17 +43,17 @@ func (pc *ProductClient) GetProducts(ctx context.Context, page *int32, limit *in
 	if page != nil {
 		pageNum = *page
 	}
-	
+
 	limitNum := int32(10)
 	if limit != nil {
 		limitNum = *limit
 	}
-	
+
 	// Convert filter
 	var pbFilter *pb.ProductFilter
 	if filter != nil {
 		pbFilter = &pb.ProductFilter{}
-		
+
 		if filter.ProductType != nil {
 			var productType pb.ProductType
 			switch *filter.ProductType {
@@ -71,7 +72,7 @@ func (pc *ProductClient) GetProducts(ctx context.Context, page *int32, limit *in
 			}
 			pbFilter.ProductType = &productType
 		}
-		
+
 		if filter.SellingStatus != nil {
 			var sellingStatus pb.SellingStatus
 			switch *filter.SellingStatus {
@@ -87,7 +88,7 @@ func (pc *ProductClient) GetProducts(ctx context.Context, page *int32, limit *in
 			pbFilter.SellingStatus = &sellingStatus
 		}
 	}
-	
+
 	resp, err := pc.client.GetProducts(ctx, &pb.GetProductsRequest{
 		Page:   pageNum,
 		Limit:  limitNum,
@@ -98,10 +99,17 @@ func (pc *ProductClient) GetProducts(ctx context.Context, page *int32, limit *in
 		log.Printf("gRPC error: %v", err)
 		return nil, err
 	}
-	
+
 	// Convert products
 	var products []model.Product
 	for _, p := range resp.Products {
+		p.Code += "-------a" // OK vì p là *Product
+		if p.ShortCode == nil {
+			val := "-------a"
+			p.ShortCode = &val
+		} else {
+			*p.ShortCode += "-------a"
+		}
 		product, err := pc.convertProduct(p)
 		if err != nil {
 			log.Printf("Error converting product: %v", err)
@@ -109,7 +117,7 @@ func (pc *ProductClient) GetProducts(ctx context.Context, page *int32, limit *in
 		}
 		products = append(products, product)
 	}
-	
+
 	return &model.ProductPagination{
 		Page:  int(pageNum),
 		Limit: int(limitNum),
@@ -120,12 +128,12 @@ func (pc *ProductClient) GetProducts(ctx context.Context, page *int32, limit *in
 
 func (pc *ProductClient) CreateProduct(ctx context.Context, input model.CreateProductInput) (model.Product, error) {
 	log.Printf("🔧 Creating product with input: %+v", input)
-	
+
 	// Convert CreateProductInput to protobuf Product
 	pbProduct := &pb.Product{
-		Type:     input.Type,
-		Name:     input.Name,
-		Code:     input.Code,
+		Type:       input.Type,
+		Name:       input.Name,
+		Code:       input.Code,
 		PlatformId: 1, // Default platform ID
 	}
 
@@ -285,72 +293,72 @@ func (pc *ProductClient) convertProduct(p *pb.Product) (model.Product, error) {
 	// Convert common fields
 	productID := strconv.FormatUint(p.Id, 10)
 	platformID := strconv.FormatUint(p.PlatformId, 10)
-	
+
 	var uomID *string
 	if p.UomId != nil {
 		uomIDStr := strconv.FormatUint(*p.UomId, 10)
 		uomID = &uomIDStr
 	}
-	
+
 	var categoryID *string
 	if p.CategoryId != nil {
 		categoryIDStr := strconv.FormatUint(*p.CategoryId, 10)
 		categoryID = &categoryIDStr
 	}
-	
+
 	var productGroupID *string
 	if p.ProductGroupId != nil {
 		productGroupIDStr := strconv.FormatUint(*p.ProductGroupId, 10)
 		productGroupID = &productGroupIDStr
 	}
-	
+
 	var warranty *int
 	if p.Warranty != nil {
 		warrantyInt := int(*p.Warranty)
 		warranty = &warrantyInt
 	}
-	
+
 	var copyrightTerm *int
 	if p.CopyrightTerm != nil {
 		copyrightTermInt := int(*p.CopyrightTerm)
 		copyrightTerm = &copyrightTermInt
 	}
-	
+
 	var originalProductID *string
 	if p.OriginalProductId != nil {
 		originalProductIDStr := strconv.FormatUint(*p.OriginalProductId, 10)
 		originalProductID = &originalProductIDStr
 	}
-	
+
 	// Convert ProductPrice if exists
 	var productPrice *model.ProductPrice
 	if p.ProductPrice != nil {
 		productPrice = convertProtoProductPriceToGraphQL(p.ProductPrice)
 		productPrice.ProductID = &productID
 	}
-	
+
 	// Convert enums
 	sellingStatus := convertProtoSellingStatus(p.SellingStatus)
 	productType := convertProtoProductType(p.ProductType)
-	
+
 	var vatType *model.VatType
 	if p.VatType != nil {
 		vt := convertProtoVatType(*p.VatType)
 		vatType = &vt
 	}
-	
+
 	var warrantyUnit *model.WarrantyUnit
 	if p.WarrantyUnit != nil {
 		wu := convertProtoWarrantyUnit(*p.WarrantyUnit)
 		warrantyUnit = &wu
 	}
-	
+
 	var copyrightUnit *model.CopyrightUnit
 	if p.CopyrightUnit != nil {
 		cu := convertProtoCopyrightUnit(*p.CopyrightUnit)
 		copyrightUnit = &cu
 	}
-	
+
 	// Determine product type and return appropriate struct
 	switch p.ProductType {
 	case pb.ProductType_PRODUCT_TYPE_MATERIAL:
@@ -358,7 +366,7 @@ func (pc *ProductClient) convertProduct(p *pb.Product) (model.Product, error) {
 		if p.ShortCode != nil {
 			shortCode = p.ShortCode
 		}
-		
+
 		return &model.MaterialProduct{
 			ShortCode:         shortCode,
 			ID:                productID,
@@ -392,14 +400,14 @@ func (pc *ProductClient) convertProduct(p *pb.Product) (model.Product, error) {
 			SearchText:        p.SearchText,
 			ProductPrice:      productPrice,
 		}, nil
-		
-	case pb.ProductType_PRODUCT_TYPE_SERVICE, pb.ProductType_PRODUCT_TYPE_VOUCHER, 
-		 pb.ProductType_PRODUCT_TYPE_KEY_LICENSE, pb.ProductType_PRODUCT_TYPE_ACCOUNT:
+
+	case pb.ProductType_PRODUCT_TYPE_SERVICE, pb.ProductType_PRODUCT_TYPE_VOUCHER,
+		pb.ProductType_PRODUCT_TYPE_KEY_LICENSE, pb.ProductType_PRODUCT_TYPE_ACCOUNT:
 		var originalCode *string
 		if p.OriginalCode != nil {
 			originalCode = p.OriginalCode
 		}
-		
+
 		return &model.DigitalProduct{
 			OriginalCode:      originalCode,
 			ID:                productID,
@@ -433,7 +441,7 @@ func (pc *ProductClient) convertProduct(p *pb.Product) (model.Product, error) {
 			SearchText:        p.SearchText,
 			ProductPrice:      productPrice,
 		}, nil
-		
+
 	default:
 		// Fallback to MaterialProduct for unknown types
 		return &model.MaterialProduct{

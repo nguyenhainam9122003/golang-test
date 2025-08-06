@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package product;
 
-option go_package = "proto/gen/product;product";
+option go_package = "gen/product;product";
 
 import "google/protobuf/timestamp.proto";
 

@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"test/grpc_service/domain"
-	"test/grpc_service/model"
+	"test/core/domain"
+	"test/core/model"
 )
 
 type productService struct {

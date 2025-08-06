@@ -2,7 +2,7 @@ package model
 
 import (
 	"errors"
-	"test/grpc_service/utils"
+	"test/core/utils"
 	"time"
 )
 

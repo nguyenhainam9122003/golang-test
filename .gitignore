@@ -32,7 +32,7 @@ Thumbs.db
 # Env files
 .env
 .env.*
-grpc_server/.env
+core/.env
 
 # Generated gRPC files
 proto/gen/

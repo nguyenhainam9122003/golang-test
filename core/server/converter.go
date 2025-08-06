@@ -1,7 +1,7 @@
 package server
 
 import (
-	"test/grpc_service/model"
+	"test/core/model"
 	protoProduct "test/proto/gen/product"
 
 	"google.golang.org/protobuf/types/known/timestamppb"

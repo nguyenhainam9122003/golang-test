@@ -2,7 +2,7 @@ package domain
 
 import (
 	"context"
-	"test/grpc_service/model"
+	"test/core/model"
 )
 
 type ProductRepository interface {

@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 	"gorm.io/gorm"
-	"test/grpc_service/domain"
-	"test/grpc_service/model"
+	"test/core/domain"
+	"test/core/model"
 	"time"
 )
 
