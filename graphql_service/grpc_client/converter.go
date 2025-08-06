@@ -243,12 +243,12 @@ func convertProtoProductPriceToGraphQL(pbPrice *pb.ProductPrice) *model.ProductP
 	}
 
 	productPrice := &model.ProductPrice{
-		ID:            strconv.FormatUint(pbPrice.Id, 10),
-		PlatformID:    strconv.FormatUint(pbPrice.PlatformId, 10),
-		Level1Price:   int(pbPrice.Level1Price),
-		Level2Price:   int(pbPrice.Level2Price),
-		Level3Price:   int(pbPrice.Level3Price),
-		Level4Price:   int(pbPrice.Level4Price),
+		ID:             strconv.FormatUint(pbPrice.Id, 10),
+		PlatformID:     strconv.FormatUint(pbPrice.PlatformId, 10),
+		Level1Price:    int(pbPrice.Level1Price),
+		Level2Price:    int(pbPrice.Level2Price),
+		Level3Price:    int(pbPrice.Level3Price),
+		Level4Price:    int(pbPrice.Level4Price),
 		Level1Quantity: nil,
 		Level1Discount: nil,
 		Level2Quantity: nil,
@@ -257,9 +257,9 @@ func convertProtoProductPriceToGraphQL(pbPrice *pb.ProductPrice) *model.ProductP
 		Level3Discount: nil,
 		Level4Quantity: nil,
 		Level4Discount: nil,
-		PriceHasVat:   nil,
-		CreatedAt:     pbPrice.CreatedAt.AsTime(),
-		UpdatedAt:     pbPrice.UpdatedAt.AsTime(),
+		PriceHasVat:    nil,
+		CreatedAt:      pbPrice.CreatedAt.AsTime(),
+		UpdatedAt:      pbPrice.UpdatedAt.AsTime(),
 	}
 
 	// Set optional fields for ProductPrice
@@ -301,4 +301,4 @@ func convertProtoProductPriceToGraphQL(pbPrice *pb.ProductPrice) *model.ProductP
 	}
 
 	return productPrice
-} 
+}
