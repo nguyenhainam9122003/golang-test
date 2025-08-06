@@ -1,4 +1,4 @@
-# Binaries for programs and plugins
+# Binaries and executables
 *.exe
 *.dll
 *.so
@@ -6,38 +6,42 @@
 *.test
 *.out
 
-# Output of the go coverage tool
+# Coverage reports
 *.coverprofile
 
 # Logs
 *.log
 
-# Dependency directories (remove the comment below if you use Go modules)
+# Dependency directory (if not vendoring)
 vendor/
 
-# Go workspace files
+# Go workspace
 go.work
 go.work.sum
 
-# IDE/editor configs
+# IDE/editor config
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS-specific files
+# OS files
 .DS_Store
 Thumbs.db
 
 # Env files
-grpc_server/.env
+.env
 .env.*
+grpc_server/.env
 
-# Build output
+# Generated gRPC files
+proto/gen/
+
+# gqlgen generated files
+graphql/generated/
+graphql/model/models_gen.go
+
+# Build artifacts
 bin/
 dist/
 build/
-
-# Ignore gqlgen generated code
-graph/generated/
-graph/model/models_gen.go
